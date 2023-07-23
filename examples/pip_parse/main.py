@@ -12,8 +12,18 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import requests
+import google
+print(google.__file__)
+print(google.__path__)
+import google.protobuf
+print(google.protobuf.__file__)
+import google.auth
+print(google.auth.__file__)
 
 
-def version():
-    return requests.__version__
+def main():
+    pass
+
+
+if __name__ == "__main__":
+    main()
