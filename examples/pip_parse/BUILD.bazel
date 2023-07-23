@@ -6,6 +6,7 @@ load(
 )
 load("@rules_python//python:defs.bzl", "py_binary", "py_test")
 load("@rules_python//python:pip.bzl", "compile_pip_requirements")
+load("@rules_python//python:proto.bzl", "py_proto_library")
 
 # Toolchain setup, this is optional.
 # Demonstrate that we can use the same python interpreter for the toolchain and executing pip in pip install (see WORKSPACE).
@@ -33,11 +34,23 @@ load("@rules_python//python:pip.bzl", "compile_pip_requirements")
 #)
 # End of toolchain setup.
 
+py_proto_library(
+    name = "pricetag_proto_py_pb2",
+    deps = [":pricetag_proto"],
+)
+
+proto_library(
+    name = "pricetag_proto",
+    srcs = ["pricetag.proto"],
+)
+
 py_binary(
     name = "main",
     srcs = ["main.py"],
     deps = [
-        "@pypi_requests//:pkg",
+        ":pricetag_proto_py_pb2",
+        "@pypi_kubernetes//:pkg",
+        "@pypi_protobuf//:pkg",
     ],
 )
 
